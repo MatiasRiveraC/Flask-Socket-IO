@@ -5,7 +5,7 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 app.config["CORS_HEADER"] = "Content-Type"
-socketio = SocketIO(app, cors_allowed_origins="*")
+socketio = SocketIO(app, cors_allowed_origins="*", engineio_logger=True, logger=True, async_mode='gevent', websocket_ping_interval=None)
 
 @app.route('/')
 def index():
@@ -19,7 +19,7 @@ def test_connect():
 @socketio.on('message')
 def test_connect2(data):
     print(data)
-    socketio.emit('after connect', {'data':data})
+    socketio.emit('Response', {'data':data})
     
 @socketio.on('disconnect')
 def test_disconnect():
